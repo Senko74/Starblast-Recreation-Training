@@ -12,13 +12,13 @@ class game
 
     addNewPlayer(socket, name)
     {
-        const playerShipId = getMaxShipId(this.players) + 1
-        const newPlayer = new Player(socked, name, playerShipId)
+        const playerShipId = this.getMaxShipId(this.players) + 1
+        const newPlayer = new Player(socket, name, playerShipId)
     }
 
     getMaxShipId(playersList)
     {
-        const maxPlayerShipId = 0
+        let maxPlayerShipId = 0
         for(player of playersList)
         {
             if(player.shipId > maxPlayerShipId)
