@@ -1,0 +1,49 @@
+-------------------------------
+|      Server Manager         |
+-------------------------------
+
+---- Game Verification ----
+
+- Verify every Minutes
+- If no game open -> Create a Game
+- If the actual game is full -> Create a Game
+- Remove finished games
+
+---- Create Game ----
+
+- Took an unchoosen id
+- Create a Game Manager instance
+- Register the game in server.js
+
+---- Authentification ----
+
+- On connection -> Ask the player his data
+- Verify The data 
+- Find A Game with data
+- Send The Game data
+
+-------------------------------
+|      Game Manager           |
+-------------------------------
+
+---- New Player ----
+
+- A player enter with the game Id
+- Register the new player
+- Create a PlayerManager instance for this player
+
+
+---- On Begin ----
+
+- Create asteroid field
+- Set the games data
+
+---- On Begin ----
+
+
+
+
+-------------------------------
+|      Player Manager         |
+-------------------------------
+
