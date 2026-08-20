@@ -35,10 +35,24 @@ server.on("connection", (socket) =>
             {
                 case "join_game":
                     joinAGame(socket, msg)
+
             }
         }
     })
 })
+
+function sendWelcome(socket, game)
+{
+    socket.send(JSON.stringify(
+        {
+            name : "welcome",
+            data : 
+            {
+                gameId : game.gameId
+            }
+        }
+    ))
+}
 
 function joinAGame(socket, playerData)
 {
@@ -49,7 +63,9 @@ function joinAGame(socket, playerData)
     if(typeof(gameIdx) === "number")
     {
         games[gameIdx].addNewPlayer(socket, player_name)
+        sendWelcome(socket, games[gameIdx])
     }
+    
 }
 
 function sendError(socket, error)
