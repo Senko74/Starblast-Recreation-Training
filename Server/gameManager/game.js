@@ -69,6 +69,7 @@ class game
                 switch(msg.name)
                 {
                     case "thrust":
+                        this.playerThrust(player)
                 }
             }
         })
@@ -77,6 +78,14 @@ class game
     playerThrust(player)
     {
         const angle = player.angle
+        console.log(angle)
+        const radAngle = (angle*Math.PI)/180
+        console.log("Rad angle", radAngle)
+        const speedX = Math.cos(radAngle)
+        const speedY = Math.sin(radAngle)
+        console.log("Speed x : ", speedX,"Speed y : ", speedY)
+        player.speedX = speedX
+        player.speedY = speedY
     }
 
     

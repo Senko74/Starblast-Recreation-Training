@@ -14,8 +14,8 @@ class Player
             shipAcceleration : null,
             maxSpeed : null
         }
-        this.x = 0
-        this.y = 0
+        this.x = 200
+        this.y = 200
         this.speedX = 0
         this.speedY = 0
         this.angle = 0 
@@ -37,6 +37,7 @@ class Player
     {
         this.x += this.speedX
         this.y += this.speedY
+        console.log("player position : ", "X : " + this.x, "Y : " + this.y)
     }
 
     sendDataToClient()

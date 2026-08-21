@@ -28,7 +28,7 @@ server.on("connection", (socket) =>
         {
             return
         }
-        console.log(msg)
+        // console.log(msg)
         if(msg.name)
         {
             switch(msg.name)
@@ -49,7 +49,8 @@ function sendWelcome(socket, game)
             name : "welcome",
             data : 
             {
-                gameId : game.gameId
+                gameId : game.gameId,
+                size : game.mapSize
             }
         }
     ))
@@ -86,13 +87,13 @@ function sendGame(socket)
     const gameFoundData = findGame(games)
     if(socket)
     {
+
         socket.send(JSON.stringify(
             {
                 name : "gameInfo",
                 data : 
                 {
-                    gameId : gameFoundData.gameId,
-                    mapSize : gameFoundData.mapSize
+                    gameId : gameFoundData.gameId
                 }
             }
         ))
