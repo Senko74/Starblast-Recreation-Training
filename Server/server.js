@@ -36,6 +36,7 @@ server.on("connection", (socket) =>
                 case "join_game":
                     joinAGame(socket, msg)
 
+
             }
         }
     })
@@ -90,7 +91,8 @@ function sendGame(socket)
                 name : "gameInfo",
                 data : 
                 {
-                    gameInfo : gameFoundData
+                    gameId : gameFoundData.gameId,
+                    mapSize : gameFoundData.mapSize
                 }
             }
         ))

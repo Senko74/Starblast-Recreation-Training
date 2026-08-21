@@ -1,0 +1,8 @@
+[
+    {
+        "shipId" : 1,
+        "shipMass" : 50, 
+        "shipAcceleration" : 3,
+        "maxSpeed" : 30
+    }
+]

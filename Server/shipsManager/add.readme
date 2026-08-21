@@ -1,0 +1,4 @@
+ShipId -> Reference of the ship
+Mass -> Mass of the ship in kg
+Acceleration -> Acceleration of the ship in a unit idc
+MaxSpeed -> MaxSpeed of the ship

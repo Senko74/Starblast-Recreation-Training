@@ -1,9 +1,23 @@
+
+import * as Renderer from "./renderer/renderGame.js"
+const title = document.querySelector("#title")
 const playButton = document.querySelector("#playButton")
 const playerNameInput = document.querySelector("#playerName")
-const playerName = playerNameInput.value
+const canvas = document.querySelector("#renderCanvas")
+
 let socket
+let render
 
 playButton.addEventListener("click", connectToServer)
+addEventListener("keydown", (event) =>
+{
+    if(event.key === "ArrowUp")
+    {
+        console.log("arrow up")
+        sendThrust()
+    }
+})
+
 
 
 function connectToServer()
@@ -29,8 +43,13 @@ function connectToServer()
             switch(msg.name)
             {
                 case "gameInfo":
-                    joinGame(msg.data.gameInfo.gameId)
-                    console.log("idddddddddd", msg.data.gameInfo.gameId)
+                    joinGame(msg.data.gameId)
+                    break
+                case "welcome":
+                    startRendering(msg.data)
+                    break
+                case "player_update":
+                    render.serverMessage(msg.data)
             }
         }
     })
@@ -55,6 +74,7 @@ function joinGame(gameId)
 {
     if(socket)
     {
+        const playerName = playerNameInput.value
         socket.send(JSON.stringify(
             {
                 name : "join_game",
@@ -67,5 +87,26 @@ function joinGame(gameId)
             }
         ))
     }
+}
+
+function startRendering(gameDataSent)
+{
+    console.log("start rendering")
+    title.style.display = "none"
+    playButton.style.display = "none"
+    playerNameInput.style.display = "none"
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+
+    render = new Renderer.GameRenderer(gameDataSent)
+}
+
+function sendThrust()
+{
+    socket.send(JSON.stringify(
+        {
+            name : "thrust"
+        }
+    ))
 }
 
