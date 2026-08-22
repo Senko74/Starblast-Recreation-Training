@@ -18,7 +18,8 @@ class Player
         this.y = 200
         this.speedX = 0
         this.speedY = 0
-        this.angle = 0 
+        this.angle = 90 
+        this.angularVelocity = 0
         this.life = 100
         this.initPlayer()
     }
@@ -37,7 +38,7 @@ class Player
     {
         this.x += this.speedX
         this.y += this.speedY
-        console.log("player position : ", "X : " + this.x, "Y : " + this.y)
+        this.angle += this.angularVelocity
     }
 
     sendDataToClient()

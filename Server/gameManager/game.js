@@ -69,26 +69,64 @@ class game
                 switch(msg.name)
                 {
                     case "thrust":
-                        this.playerThrust(player)
+                        this.playerThrust(player, true)
+                        break
+                    case "stop_thrust":
+                        this.playerThrust(player, false)
+                        break
+                    case "right":
+                        this.playerSpin(player, true, false)
+                    case "left":
+                        this.playerSpin(player, false, false)
+                    case "stop_right":
+                        this.playerSpin(player, false, true)
+                    case "stop_left":
+                        this.playerSpin(player, true, true)
                 }
             }
         })
     }
 
-    playerThrust(player)
+    playerThrust(player, isThrusting)
     {
-        const angle = player.angle
-        console.log(angle)
-        const radAngle = (angle*Math.PI)/180
-        console.log("Rad angle", radAngle)
-        const speedX = Math.cos(radAngle)
-        const speedY = Math.sin(radAngle)
-        console.log("Speed x : ", speedX,"Speed y : ", speedY)
-        player.speedX = speedX
-        player.speedY = speedY
+        if(isThrusting === true)
+        {
+            const angle = player.angle
+            const radAngle = (angle*Math.PI)/180
+            const speedX = Math.cos(radAngle)
+            const speedY = Math.sin(radAngle)
+            player.speedX = speedX
+            player.speedY = speedY
+            console.log("player thrust", speedX, speedY)
+        }
+        else
+        {
+            player.speedX = 0
+            player.speedY = 0
+            console.log("player stop thrust", player.speedX, player.speedX)
+        }
     }
 
-    
+    playerSpin(player, isRight, isStop)
+    {
+        if(isRight === true && isStop === false)
+        {
+            player.angularVelocity += 1
+        }
+        else if(isRight === false && isStop === false)
+        {
+            player.angularVelocity -=  1
+        }
+        else if(isRight === true && isStop === true)
+        {
+            player.angularVelocity -=  1
+        }
+        else if(isRight === false && isStop === true)
+        {
+            player.angularVelocity +=  1
+        }
+    }
+
 }
 
 module.exports = { game }
