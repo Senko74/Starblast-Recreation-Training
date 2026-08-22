@@ -11,12 +11,37 @@ let render
 playButton.addEventListener("click", connectToServer)
 addEventListener("keydown", (event) =>
 {
-    if(event.key === "ArrowUp")
+    if(event.key === "ArrowUp" && !event.repeat)
     {
-        console.log("arrow up")
-        sendThrust()
+        sendStartThrust()
+    }
+    else if(event.key === "ArrowRight" && !event.repeat)
+    {
+        sendStartSpinRight()
+    }
+    else if(event.key === "ArrowLeft" && !event.repeat)
+    {
+        sendStartSpinLeft()
     }
 })
+
+addEventListener("keyup", (event) =>
+{
+    if(event.key === "ArrowUp")
+    {
+        sendStopThrust()
+    }
+    else if(event.key === "ArrowRight" && !event.repeat)
+    {
+        sendStopSpinRight()
+    }
+    else if(event.key === "ArrowLeft" && !event.repeat)
+    {
+        sendStopSpinLeft()
+    }
+})
+
+
 
 
 
@@ -29,6 +54,10 @@ function connectToServer()
 
     socket.addEventListener("message", (message) =>
     {
+        if(render)
+        {
+            render.serverMessage(message)
+        }
         let msg
         try
         {
@@ -47,9 +76,9 @@ function connectToServer()
                     break
                 case "welcome":
                     startRendering(msg.data)
+                    console.log(msg)
                     break
-                case "player_update":
-                    render.serverMessage(msg.data)
+
             }
         }
     })
@@ -101,12 +130,59 @@ function startRendering(gameDataSent)
     render = new Renderer.GameRenderer(gameDataSent)
 }
 
-function sendThrust()
+function sendStartThrust()
 {
+    console.log("start thrust")
     socket.send(JSON.stringify(
         {
             name : "thrust"
         }
     ))
+}
+
+function sendStopThrust()
+{
+    console.log("stop thrust")
+    socket.send(JSON.stringify(
+        {
+            name : "stop_thrust"
+        }
+    ))
+}
+
+function sendStartSpinRight()
+{
+    socket.send(JSON.stringify(
+        {
+            name : "right"
+        }
+    ))
+}
+
+function sendStartSpinLeft()
+{
+    socket.send(JSON.stringify(
+        {
+            name : "left"
+        }
+    )) 
+}
+
+function sendStopSpinRight()
+{
+    socket.send(JSON.stringify(
+        {
+            name : "stop_right"
+        }
+    )) 
+}
+
+function sendStopSpinLeft()
+{
+    socket.send(JSON.stringify(
+        {
+            name : "stop_left"
+        }
+    )) 
 }
 

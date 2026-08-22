@@ -25,7 +25,35 @@ class game
         {
             player.update()
             player.sendPlayerInfo()
+            const playerList = this.playersArrayWithoutPlayer(player)
+            player.sendOtherPlayersInfo(playerList)
         }
+    }
+
+    playersArrayWithoutPlayer(player)
+    {
+        const newArray = []
+        for(const playerOfList of this.players)
+        {
+            if(player !== playerOfList)
+            {
+                newArray.push(
+                {
+                    player_name : player.player_name,
+                    shipId : player.shipId,
+                    typeShipId : player.typeShipId,
+                    x : player.x,
+                    y : player.y,
+                    speedX : player.speedX,
+                    speedY : player.speedY,
+                    angle : player.angle,
+                    angularVelocity : player.angularVelocity,
+                    life : player.life
+                })
+            }
+        }
+        console.log(newArray)
+        return newArray
     }
 
     addNewPlayer(socket, name)
@@ -76,12 +104,16 @@ class game
                         break
                     case "right":
                         this.playerSpin(player, true, false)
+                        break
                     case "left":
                         this.playerSpin(player, false, false)
+                        break
                     case "stop_right":
-                        this.playerSpin(player, false, true)
-                    case "stop_left":
                         this.playerSpin(player, true, true)
+                        break
+                    case "stop_left":
+                        this.playerSpin(player, false, true)
+                        break
                 }
             }
         })
@@ -91,19 +123,12 @@ class game
     {
         if(isThrusting === true)
         {
-            const angle = player.angle
-            const radAngle = (angle*Math.PI)/180
-            const speedX = Math.cos(radAngle)
-            const speedY = Math.sin(radAngle)
-            player.speedX = speedX
-            player.speedY = speedY
-            console.log("player thrust", speedX, speedY)
+            player.isThrusting = true
+
         }
         else
         {
-            player.speedX = 0
-            player.speedY = 0
-            console.log("player stop thrust", player.speedX, player.speedX)
+            player.isThrusting = false
         }
     }
 
@@ -111,21 +136,22 @@ class game
     {
         if(isRight === true && isStop === false)
         {
-            player.angularVelocity += 1
+            player.angularVelocity = -5
         }
         else if(isRight === false && isStop === false)
         {
-            player.angularVelocity -=  1
+            player.angularVelocity = 5
         }
         else if(isRight === true && isStop === true)
         {
-            player.angularVelocity -=  1
+            player.angularVelocity =  0
         }
         else if(isRight === false && isStop === true)
         {
-            player.angularVelocity +=  1
+            player.angularVelocity =  0
         }
     }
+
 
 }
 

@@ -21,6 +21,7 @@ class Player
         this.angle = 90 
         this.angularVelocity = 0
         this.life = 100
+        this.isThrusting = false
         this.initPlayer()
     }
 
@@ -34,11 +35,38 @@ class Player
         this.updatePosition()
     }
 
+    updateAngle()
+    {
+        if(this.isThrusting)
+        {
+            const angle = this.angle
+            const radAngle = (angle*Math.PI)/180
+            this.speedX = Math.cos(radAngle)
+            this.speedY = Math.sin(radAngle)
+        }
+        else
+        {
+            this.speedX = 0
+            this.speedY = 0
+        }
+    }
+
     updatePosition()
     {
+        this.updateAngle()
         this.x += this.speedX
         this.y += this.speedY
         this.angle += this.angularVelocity
+    }
+
+    sendOtherPlayersInfo(playersList)
+    {
+        this.socket.send(JSON.stringify
+            ({
+                name : "other_players",
+                players_list : playersList
+            })
+        )
     }
 
     sendDataToClient()
