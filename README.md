@@ -15,4 +15,9 @@ The game is simple, you join a party and you fight against player, when the game
 
 - **Standalone Server** : the server create new games automaticly create new games, if a game have to many players, if there is no game
   the server create it by itself
-- 
+- **Connection Manager** : when someone connect to the server, the server check all the games and find the best game for the player to play
+- **Communication Manager** : There is a constant connection between a player/client and the server, the server send informations to the client
+  and the client send also informations to the server with a single WebSocket connection.
+- **Game Manager** & **Player Manager** : A game manager is what control a game, it calculate the players poisitions, the physic, the speeds...
+  It also communicate with player manager, Player Manager is where the data about the game are sent to the client, like the player position, ennemy positions etc...
+  
